@@ -1,16 +1,60 @@
-## Hi there 👋
+# Hi, I'm Shaad
 
-<!--
-**shaadqrsh/shaadqrsh** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+I'm a gameplay and engine programmer in Boston, working on an MS in Computer Science at Northeastern University (Khoury College). Before that I spent about two and a half years freelancing as a game programmer, delivering 100+ small projects for 50+ clients in Unity (C#) and Unreal Engine (C++ and Blueprints).
 
-Here are some ideas to get you started:
+Most of what I build is core gameplay: player controllers, physics, enemy AI, and UI. I enter game jams and coding challenges when I can, and I've taken first place in three of them.
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+**[Portfolio](https://www.shaadqrsh.com)** · **[Resume](https://www.shaadqrsh.com/resume)** · **[LinkedIn](https://www.linkedin.com/in/shaadrqrsh/)** · **[X](https://x.com/shaadqrsh)** · **[Email](mailto:shaadqrsh.work@gmail.com)**
+
+## Right now
+
+- MS in Computer Science at Northeastern, 2026 to 2028
+- Media Services Technician at Northeastern, running lighting, sound, and projection for live campus events
+
+## Games
+
+| Game | About | Built with | Links |
+| --- | --- | --- | --- |
+| **Counting Sheep** (2026) | Solo 3D platformer made in 96 hours for GMTK Game Jam 2026. You hop across cloud platforms shaped like the number being counted down, and they fall apart under you. Rated 4.5/5 in every category except audio. | Unity, C#, URP, Shader Graph, VFX Graph | [Play](https://bro-skito.itch.io/counting-sheep) · [More](https://www.shaadqrsh.com/projects/countingsheep) |
+| **Harvest Rush** (2026) | One or two player farming game in the spirit of Overcooked. Fill the delivery truck's order before it leaves while pests (A* pathfinding) and spreading fires get in the way. | C++, SDL3, CMake | [Code](https://github.com/shaadqrsh/harvest-rush) · [More](https://www.shaadqrsh.com/projects/harvestrush) |
+| **Pokémon Bushido** (2021) | Samurai-themed fangame, 10 to 15 hours long, made by a team of 4 in 30 days. Won 1st of 31 at Relic Castle Winter Jam #2. I did the core engine work and new mechanics like Katana techniques and following Pokémon. | Ruby, C++ | [Play](https://eeveeexpo.com/bushido/) · [Code](https://github.com/TheLuxDiablo/Pokemon-Bushido) · [More](https://www.shaadqrsh.com/projects/bushido) |
+| **Pokémon Splice** (2020) | Fangame with a form-changing starter and a branching story that changes depending on which team you side with. Won 1st of 46 at Relic Castle Game Jam 6. Team of 4, 30 days. | Ruby, C++ | [Play](https://eeveeexpo.com/splice/) · [More](https://www.shaadqrsh.com/projects/splice) |
+
+## Other projects
+
+| Project | About | Built with | Links |
+| --- | --- | --- | --- |
+| **SQLift** (2026) | Full-stack workout tracker for a database course: plan workouts, log sets live, track progress, and compete on leaderboards. I wrote Flask API modules and set up the CI/CD pipeline. | React, Flask, PostgreSQL, Supabase | [Live](https://cs-5200-project.vercel.app) · [Code](https://github.com/btoneil2021/cs-5200-project) |
+| **NanoRewind 4K** (2025) | Restores old, scratched, or blurry photos to 4K with Google Gemini, with a slider to compare before and after. | React, TypeScript, Supabase, Gemini | [Live](https://nanorewind-4k.vercel.app/) · [Code](https://github.com/shaadqrsh/nanorewind-4k) |
+| **CareerPath AI** (2025) | AI career counselor that builds personalized roadmaps and "day in the life" previews. Built in 3 days. | React, TypeScript, Python, Supabase, Gemini, Docker | [Live](https://pathfinder-ai-nine.vercel.app/) · [Code](https://github.com/shaadqrsh/pathfinder-ai) |
+| **HOMI** (2025) | Learning assistant for IT students: study material, answers to questions, generated practice tests, and attendance and assignment tracking. | Next.js, Django, PostgreSQL, DeepSeek R1, Gemini | [Live](https://homi-bot.vercel.app) · [Code](https://github.com/shaadqrsh/HOMI-distro) |
+| **Findly** (2025) | Android lost-and-found app with a live item feed and in-app chat. | Java, Android Studio, Firebase | [Code](https://github.com/shaadqrsh/findly-android-studio/) |
+| **Artist Portfolio** (2026) | Portfolio site for Emaad, an artist in my family. They add and edit pieces through a Decap CMS dashboard without touching code. | React, Vite, Decap CMS, GitHub Pages | [Live](https://emmeqqu-08.github.io/emaad-portfolio/) · [Code](https://github.com/emmeqqu-08/emaad-portfolio) |
+| **shaadqrsh.com** (2026) | My portfolio site, with a page for each project and a resume PDF generated from the same data file. | Next.js, React, TypeScript, Tailwind | [Live](https://www.shaadqrsh.com) · [Code](https://github.com/shaadqrsh/shaad-portfolio) |
+
+## Jams and challenges
+
+- **Roblox Racing Challenge** (2026): 1st place, Grand Prize. Wrote a Lua vehicle controller in Roblox Studio within a one-hour limit, then tuned it until it won the head-to-head race.
+- **GMTK Game Jam** (2026): Counting Sheep, made solo in 96 hours.
+- **IIT Madras Shaastra Techathon** (2024): Led a team of 4. Placed 2nd in my college and 116th in India.
+- **Relic Castle Winter Jam #2** (2021): 1st of 31 with Pokémon Bushido.
+- **Relic Castle Game Jam 6** (2020): 1st of 46 with Pokémon Splice.
+
+## Publications
+
+- [Building Trust in Transformers with a SHAP-Based Approach for Explaining AI Decisions](https://ieeexplore.ieee.org/document/11115248), IEEE Xplore, 2025
+- [GPT vs. Open-Source LLMs: A Comprehensive Performance and Capability Assessment](https://www.ijert.org/gpt-vs--open-source-llms--a-comprehensive-performance-and-capability-assessment), IJERT, 2025
+
+## Tools
+
+**Engines and art**
+
+![Unity, Unreal Engine, Godot, Blender, Photoshop, Premiere Pro](https://skillicons.dev/icons?i=unity,unreal,godot,blender,ps,pr)
+
+**Languages**
+
+![C#, C++, Lua, Python, Java, Ruby](https://skillicons.dev/icons?i=cs,cpp,lua,py,java,ruby)
+
+**Web and backend**
+
+![React, Next.js, TypeScript, Tailwind, Flask, Django, PostgreSQL, Supabase, Docker, Firebase, Git](https://skillicons.dev/icons?i=react,nextjs,ts,tailwind,flask,django,postgres,supabase,docker,firebase,git)

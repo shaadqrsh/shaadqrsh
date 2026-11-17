@@ -61,3 +61,4 @@ Most of what I build is core gameplay: player controllers, physics, enemy AI, an
 **Web and backend**
 
 ![React, Next.js, TypeScript, Tailwind, Flask, Django, PostgreSQL, Supabase, Docker, Firebase, Git](https://skillicons.dev/icons?i=react,nextjs,ts,tailwind,flask,django,postgres,supabase,docker,firebase,git)
+

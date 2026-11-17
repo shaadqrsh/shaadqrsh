@@ -2,7 +2,7 @@
 // Builds README.md from README.template.md plus the portfolio's data files.
 //
 // Data comes from the portfolio repo (by default two folders up from here):
-//   src/lib/resume_data.json  titles, dates, categories, descriptions, jams, publications
+//   src/lib/resume_data.json  titles, dates, descriptions, jams, publications
 //   src/lib/projectId.ts      per-project links and technologies
 // Hand-tuned wording (short blurbs, trimmed tech lists, hidden rows) lives in
 // readme.config.json next to the template.
@@ -85,7 +85,7 @@ function applyOrder(items, order, keyOf) {
 function projectTable(sectionKey) {
   const section = config.sections[sectionKey];
   const inSection = resume.projects
-    .filter((p) => p.category === section.category)
+    .filter((p) => Boolean(projectDetails[p.url]?.game) === section.game)
     .filter((p) => !config.projects[p.url]?.hide);
   const rows = applyOrder(inSection, section.order, (p) => p.url)
     .map((p) => {

@@ -15,7 +15,7 @@
   ],
   "sections": {
     "games": {
-      "category": "Game Projects",
+      "game": true,
       "firstColumn": "Game",
       "moreLink": true,
       "order": [
@@ -27,7 +27,7 @@
       ]
     },
     "projects": {
-      "category": "Other Projects",
+      "game": false,
       "firstColumn": "Project",
       "moreLink": false,
       "extra": [

@@ -44,5 +44,5 @@ Style: plain first person, short sentences, concrete numbers. No marketing words
 ## Boundaries
 
 - Don't commit or push without Shaad saying so. This README is public.
-- `Project GDDs/` holds private design docs and is gitignored here. Never copy its contents into tracked files or the README.
+- Shaad's game design docs are private and kept outside this repo. Never add them here or copy their contents into the README.
 - Leave the template's hand-written sections alone unless asked.

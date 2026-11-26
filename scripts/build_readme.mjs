@@ -1,11 +1,29 @@
 #!/usr/bin/env node
-// Builds README.md from README.template.md plus the portfolio's data files.
+// Builds the whole README.md from the portfolio's data files. Nothing in the
+// README is written by hand, so edit the data, never README.md.
 //
 // Data comes from the portfolio repo (by default two folders up from here):
-//   src/lib/resume_data.json  titles, dates, blurbs, jams, publications
+//   src/lib/resume_data.json  name, about, links, current roles, projects,
+//                             blurbs, jams, publications, skills
 //   src/lib/projectId.ts      per-project links and technologies
-// Everything else comes from the rules below. Rows follow the order of the
-// arrays in resume_data.json. Hand-written rows and text go in the template.
+//
+// Rules:
+//   - Intro: "Hi, I'm <first name>", the site's About text, then a links bar
+//     (portfolio, resume, and every link in `links` except GitHub, since the
+//     README is already on GitHub).
+//   - Right now: every education and experience record with inProgress. An
+//     experience's optional `blurb` follows after a comma.
+//   - Games and Other projects: split by the `game` flag in projectId.ts, in
+//     resume_data.json order, including projects marked hidden (those are
+//     kept off the site only). About is the record's `blurb`, Built with is
+//     the first TECH_COUNT technologies. A title shows only the part before
+//     " - ".
+//   - Links: GitHub reads "Code", download links are dropped, others read
+//     "Play" on games and "Live" elsewhere. Games also link to their page.
+//   - Jams: only those with a `result`. A trailing year in the title is
+//     dropped, since the year follows in brackets.
+//   - Tools: the site's skills, grouped by category. Skills with a
+//     skillicons.dev icon show as icons, the rest as text.
 //
 // Usage:
 //   node scripts/build_readme.mjs                    write README.md
@@ -47,24 +65,83 @@ const jiti = createJiti(projectIdPath);
 const { data: projectDetails } = await jiti.import(projectIdPath);
 
 const resume = JSON.parse(fs.readFileSync(resumePath, 'utf8'));
-const template = fs.readFileSync(path.join(repoDir, 'README.template.md'), 'utf8');
 
 const warnings = [];
 const year = (date) => (date || '').split('/').pop();
 const cell = (text) => String(text).replace(/\|/g, '\\|').replace(/\s*\n\s*/g, ' ');
 const site = resume.websiteUrl.replace(/\/$/, '');
 
-// How many technologies from projectId.ts go in the "Built with" column.
 const TECH_COUNT = 5;
 
-// "HOMI - Helpful Online Mentor Interface" shows as "HOMI".
-const shortTitle = (title) => title.split(' - ')[0];
-// "GMTK Game Jam 2026" shows as "GMTK Game Jam", since the year follows it.
-const jamTitle = (title, yr) => title.replace(new RegExp(`\\s+${yr}$`), '');
+// The site's skill icon files mapped to skillicons.dev icon ids. A skill whose
+// icon isn't listed here shows as text instead.
+const SKILL_ICONS = {
+  'icon_android.svg': 'androidstudio',
+  'icon_blender.svg': 'blender',
+  'icon_cmake.svg': 'cmake',
+  'icon_cpp.svg': 'cpp',
+  'icon_cs.svg': 'cs',
+  'icon_csharp.svg': 'cs',
+  'icon_django.svg': 'django',
+  'icon_docker.svg': 'docker',
+  'icon_firebase.svg': 'firebase',
+  'icon_flask.svg': 'flask',
+  'icon_git.svg': 'git',
+  'icon_godot.svg': 'godot',
+  'icon_java.svg': 'java',
+  'icon_javascript.svg': 'js',
+  'icon_lua.svg': 'lua',
+  'icon_nextjs.svg': 'nextjs',
+  'icon_photoshop.svg': 'ps',
+  'icon_postgresql.svg': 'postgres',
+  'icon_premiere.svg': 'pr',
+  'icon_python.svg': 'py',
+  'icon_react.svg': 'react',
+  'icon_ruby.svg': 'ruby',
+  'icon_supabase.svg': 'supabase',
+  'icon_tailwind.svg': 'tailwind',
+  'icon_typescript.svg': 'ts',
+  'icon_unity.svg': 'unity',
+  'icon_unreal.svg': 'unreal',
+  'icon_vercel.svg': 'vercel',
+  'icon_vite.svg': 'vite',
+};
 
-// GitHub links read "Code", other links "Play" for games and "Live" for the
-// rest. Download links are left out, because each game also has a page to play
-// it from.
+// ---- intro -----------------------------------------------------------------
+
+function intro() {
+  const first = resume.name.split(' ')[0];
+  const links = [
+    { text: 'Portfolio', href: site },
+    { text: 'Resume', href: `${site}/resume` },
+    ...resume.links
+      .filter((l) => !/github\.com/i.test(l.href))
+      .map((l) => ({ text: l.text, href: l.href.includes('@') && !l.href.includes(':') ? `mailto:${l.href}` : l.href })),
+  ];
+  return [
+    `# Hi, I'm ${first}`,
+    resume.about,
+    links.map((l) => `**[${l.text}](${l.href})**`).join(' · '),
+  ].join('\n\n');
+}
+
+// ---- right now -------------------------------------------------------------
+
+function nowList() {
+  const lines = [];
+  for (const e of resume.education.filter((e) => e.inProgress)) {
+    const place = e.subtitle?.[0];
+    lines.push(`- ${e.title}${place ? ` at ${place}` : ''}, ${year(e.startDate)} to ${year(e.endDate)}`);
+  }
+  for (const x of resume.experience.filter((x) => x.inProgress)) {
+    const place = (x.location || '').split(', ')[0];
+    lines.push(`- ${x.title}${place ? ` at ${place}` : ''}${x.blurb ? `, ${x.blurb}` : ''}`);
+  }
+  return lines.join('\n');
+}
+
+// ---- projects --------------------------------------------------------------
+
 const LINK_ORDER = ['Play', 'Live', 'Code'];
 const linkLabel = (label, game) => {
   if (/download/i.test(label)) return null;
@@ -77,12 +154,9 @@ function projectLinks(slug, detail) {
     .map((u) => ({ label: linkLabel(u.label, detail.game), url: u.url }))
     .filter((l) => l.label)
     .sort((a, b) => LINK_ORDER.indexOf(a.label) - LINK_ORDER.indexOf(b.label));
-  // Games link to their page on the site too.
   if (detail?.game) links.push({ label: 'More', url: `${site}/projects/${slug}` });
-  return links;
+  return links.map((l) => `[${l.label}](${l.url})`).join(' · ');
 }
-
-const renderLinks = (links) => links.map((l) => `[${l.label}](${l.url})`).join(' · ');
 
 function projectTable(game) {
   const lines = [`| ${game ? 'Game' : 'Project'} | About | Built with | Links |`, '| --- | --- | --- | --- |'];
@@ -90,21 +164,25 @@ function projectTable(game) {
     const detail = projectDetails[p.url];
     if (!detail) warnings.push(`${p.url}: no entry in projectId.ts, so no links or tech`);
     if (!p.blurb) warnings.push(`${p.url}: no "blurb" in resume_data.json, using its desc`);
+    const title = p.title.split(' - ')[0];
     const tech = (detail?.technologies || []).slice(0, TECH_COUNT).map((t) => t.name);
     lines.push(
-      `| **${cell(shortTitle(p.title))}** (${year(p.date)}) | ${cell(p.blurb || p.desc)} | ${cell(tech.join(', '))} | ${renderLinks(projectLinks(p.url, detail))} |`,
+      `| **${cell(title)}** (${year(p.date)}) | ${cell(p.blurb || p.desc)} | ${cell(tech.join(', '))} | ${projectLinks(p.url, detail)} |`,
     );
   }
   return lines.join('\n');
 }
 
-// Jams with no result in resume_data.json (no placing or rating) are left out.
+// ---- jams, publications ----------------------------------------------------
+
 function jamList() {
   return resume.jams
     .filter((j) => j.result)
     .map((j) => {
       if (!j.blurb) warnings.push(`jam "${j.title}": no "blurb" in resume_data.json, using its first bullet`);
-      return `- **${jamTitle(j.title, year(j.date))}** (${year(j.date)}): ${j.blurb || j.bullets[0]}`;
+      const yr = year(j.date);
+      const title = j.title.replace(new RegExp(`\\s+${yr}$`), '');
+      return `- **${title}** (${yr}): ${j.blurb || j.bullets[0]}`;
     })
     .join('\n');
 }
@@ -113,24 +191,44 @@ function publicationList() {
   return resume.publications.map((p) => `- [${p.name}](${p.url}), ${p.publishing}, ${year(p.date)}`).join('\n');
 }
 
-const blocks = {
-  games: () => projectTable(true),
-  projects: () => projectTable(false),
-  jams: jamList,
-  publications: publicationList,
-};
+// ---- tools -----------------------------------------------------------------
 
-const body = template.replace(/\r\n/g, '\n').replace(/\{\{(\w+)\}\}/g, (match, key) => {
-  if (!blocks[key]) {
-    console.error(`README.template.md uses unknown placeholder ${match}`);
-    process.exit(2);
+function toolList() {
+  const skills = [...(resume.skills.top3 || []), ...(resume.skills.main || []), ...(resume.skills.other || [])];
+  const groups = new Map();
+  for (const s of skills) {
+    if (!groups.has(s.category)) groups.set(s.category, []);
+    groups.get(s.category).push({ name: s.name || s.title, icon: SKILL_ICONS[s.icon] });
   }
-  return blocks[key]();
-});
+  const blocks = [];
+  for (const [category, list] of groups) {
+    const withIcon = list.filter((s) => s.icon);
+    const plain = list.filter((s) => !s.icon).map((s) => s.name);
+    const parts = [`**${category}**`];
+    if (withIcon.length) {
+      parts.push(`![${withIcon.map((s) => s.name).join(', ')}](https://skillicons.dev/icons?i=${withIcon.map((s) => s.icon).join(',')})`);
+    }
+    if (plain.length) parts.push(plain.join(', '));
+    blocks.push(parts.join('\n\n'));
+  }
+  return blocks.join('\n\n');
+}
+
+// ---- page ------------------------------------------------------------------
+
+const sections = [
+  intro(),
+  `## Right now\n\n${nowList()}`,
+  `## Games\n\n${projectTable(true)}`,
+  `## Other projects\n\n${projectTable(false)}`,
+  `## Jams and challenges\n\n${jamList()}`,
+  `## Publications\n\n${publicationList()}`,
+  `## Tools\n\n${toolList()}`,
+];
 
 const header =
-  '<!-- Generated by scripts/build_readme.mjs from README.template.md and the portfolio data. Edit those, not this file. -->\n\n';
-const output = header + body;
+  '<!-- Generated by scripts/build_readme.mjs from the portfolio data (shaadqrsh/shaad-portfolio). Edit that, not this file. -->\n\n';
+const output = header + sections.join('\n\n') + '\n';
 
 // In GitHub Actions, print warnings as annotations so they show on the run summary.
 const warnPrefix = process.env.GITHUB_ACTIONS ? '::warning::' : 'warning: ';

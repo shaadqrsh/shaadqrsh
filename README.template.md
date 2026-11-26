@@ -18,6 +18,7 @@ Most of what I build is core gameplay: player controllers, physics, enemy AI, an
 ## Other projects
 
 {{projects}}
+| **shaadqrsh.com** (2026) | My portfolio site, with a page for each project and a resume PDF generated from the same data file. | Next.js, React, TypeScript, Tailwind | [Live](https://www.shaadqrsh.com) · [Code](https://github.com/shaadqrsh/shaad-portfolio) |
 
 ## Jams and challenges
 

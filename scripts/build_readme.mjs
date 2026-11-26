@@ -2,10 +2,10 @@
 // Builds README.md from README.template.md plus the portfolio's data files.
 //
 // Data comes from the portfolio repo (by default two folders up from here):
-//   src/lib/resume_data.json  titles, dates, descriptions, jams, publications
+//   src/lib/resume_data.json  titles, dates, blurbs, jams, publications
 //   src/lib/projectId.ts      per-project links and technologies
-// Hand-tuned wording (short blurbs, trimmed tech lists, hidden rows) lives in
-// readme.config.json next to the template.
+// Everything else comes from the rules below. Rows follow the order of the
+// arrays in resume_data.json. Hand-written rows and text go in the template.
 //
 // Usage:
 //   node scripts/build_readme.mjs                    write README.md
@@ -47,7 +47,6 @@ const jiti = createJiti(projectIdPath);
 const { data: projectDetails } = await jiti.import(projectIdPath);
 
 const resume = JSON.parse(fs.readFileSync(resumePath, 'utf8'));
-const config = JSON.parse(fs.readFileSync(path.join(repoDir, 'readme.config.json'), 'utf8'));
 const template = fs.readFileSync(path.join(repoDir, 'README.template.md'), 'utf8');
 
 const warnings = [];
@@ -55,85 +54,68 @@ const year = (date) => (date || '').split('/').pop();
 const cell = (text) => String(text).replace(/\|/g, '\\|').replace(/\s*\n\s*/g, ' ');
 const site = resume.websiteUrl.replace(/\/$/, '');
 
-function projectLinks(slug, detail, showMore) {
-  const order = config.linkOrder;
+// How many technologies from projectId.ts go in the "Built with" column.
+const TECH_COUNT = 5;
+
+// "HOMI - Helpful Online Mentor Interface" shows as "HOMI".
+const shortTitle = (title) => title.split(' - ')[0];
+// "GMTK Game Jam 2026" shows as "GMTK Game Jam", since the year follows it.
+const jamTitle = (title, yr) => title.replace(new RegExp(`\\s+${yr}$`), '');
+
+// GitHub links read "Code", other links "Play" for games and "Live" for the
+// rest. Download links are left out, because each game also has a page to play
+// it from.
+const LINK_ORDER = ['Play', 'Live', 'Code'];
+const linkLabel = (label, game) => {
+  if (/download/i.test(label)) return null;
+  if (/github/i.test(label)) return 'Code';
+  return game ? 'Play' : 'Live';
+};
+
+function projectLinks(slug, detail) {
   const links = (detail?.urls || [])
-    .map((u) => ({ label: config.linkLabels[u.label], url: u.url, original: u.label }))
-    .filter((l) => {
-      if (l.label === undefined) warnings.push(`${slug}: unknown link label "${l.original}", add it to linkLabels`);
-      return l.label; // null in linkLabels means "leave this link out"
-    })
-    .sort((a, b) => order.indexOf(a.label) - order.indexOf(b.label));
-  if (showMore) links.push({ label: 'More', url: `${site}/projects/${slug}` });
+    .map((u) => ({ label: linkLabel(u.label, detail.game), url: u.url }))
+    .filter((l) => l.label)
+    .sort((a, b) => LINK_ORDER.indexOf(a.label) - LINK_ORDER.indexOf(b.label));
+  // Games link to their page on the site too.
+  if (detail?.game) links.push({ label: 'More', url: `${site}/projects/${slug}` });
   return links;
 }
 
 const renderLinks = (links) => links.map((l) => `[${l.label}](${l.url})`).join(' · ');
 
-// Items named in `order` come first, in that order. Anything not listed (a
-// newly added project, say) follows in its resume_data.json order, so new
-// entries still show up before you've placed them.
-function applyOrder(items, order, keyOf) {
-  if (!order) return items;
-  const rank = (item) => {
-    const i = order.indexOf(keyOf(item));
-    return i < 0 ? order.length : i;
-  };
-  return items.map((item, i) => ({ item, i })).sort((a, b) => rank(a.item) - rank(b.item) || a.i - b.i).map((x) => x.item);
-}
-
-function projectTable(sectionKey) {
-  const section = config.sections[sectionKey];
-  const inSection = resume.projects
-    .filter((p) => Boolean(projectDetails[p.url]?.game) === section.game)
-    .filter((p) => !config.projects[p.url]?.hide);
-  const rows = applyOrder(inSection, section.order, (p) => p.url)
-    .map((p) => {
-      const o = config.projects[p.url] || {};
-      const detail = projectDetails[p.url];
-      if (!detail) warnings.push(`${p.url}: no entry in projectId.ts, so no links or tech`);
-      if (!o.about) warnings.push(`${p.url}: no "about" in readme.config.json, using the resume description`);
-      const tech = o.tech || (detail?.technologies || []).slice(0, config.defaultTechCount).map((t) => t.name);
-      return {
-        title: o.name || p.title,
-        year: year(p.date),
-        about: o.about || p.desc,
-        tech,
-        links: projectLinks(p.url, detail, section.moreLink),
-      };
-    });
-  rows.push(...(section.extra || []));
-
-  const lines = ['| Game | About | Built with | Links |'.replace('Game', section.firstColumn), '| --- | --- | --- | --- |'];
-  for (const r of rows) {
-    lines.push(`| **${cell(r.title)}** (${r.year}) | ${cell(r.about)} | ${cell(r.tech.join(', '))} | ${renderLinks(r.links)} |`);
+function projectTable(game) {
+  const lines = [`| ${game ? 'Game' : 'Project'} | About | Built with | Links |`, '| --- | --- | --- | --- |'];
+  for (const p of resume.projects.filter((p) => Boolean(projectDetails[p.url]?.game) === game)) {
+    const detail = projectDetails[p.url];
+    if (!detail) warnings.push(`${p.url}: no entry in projectId.ts, so no links or tech`);
+    if (!p.blurb) warnings.push(`${p.url}: no "blurb" in resume_data.json, using its desc`);
+    const tech = (detail?.technologies || []).slice(0, TECH_COUNT).map((t) => t.name);
+    lines.push(
+      `| **${cell(shortTitle(p.title))}** (${year(p.date)}) | ${cell(p.blurb || p.desc)} | ${cell(tech.join(', '))} | ${renderLinks(projectLinks(p.url, detail))} |`,
+    );
   }
   return lines.join('\n');
 }
 
+// Jams with no result in resume_data.json (no placing or rating) are left out.
 function jamList() {
-  const visible = resume.jams.filter((j) => !config.jams[j.title]?.hide);
-  return applyOrder(visible, config.jamOrder, (j) => j.title)
+  return resume.jams
+    .filter((j) => j.result)
     .map((j) => {
-      const o = config.jams[j.title] || {};
-      if (!o.line) warnings.push(`jam "${j.title}": no "line" in readme.config.json, using its first bullet`);
-      return `- **${o.name || j.title}** (${year(j.date)}): ${o.line || j.bullets[0]}`;
+      if (!j.blurb) warnings.push(`jam "${j.title}": no "blurb" in resume_data.json, using its first bullet`);
+      return `- **${jamTitle(j.title, year(j.date))}** (${year(j.date)}): ${j.blurb || j.bullets[0]}`;
     })
     .join('\n');
 }
 
 function publicationList() {
-  return applyOrder(resume.publications, config.publicationOrder, (p) => p.url)
-    .map((p) => {
-      const o = config.publications?.[p.url] || {};
-      return `- [${o.name || p.name}](${p.url}), ${p.publishing}, ${year(p.date)}`;
-    })
-    .join('\n');
+  return resume.publications.map((p) => `- [${p.name}](${p.url}), ${p.publishing}, ${year(p.date)}`).join('\n');
 }
 
 const blocks = {
-  games: () => projectTable('games'),
-  projects: () => projectTable('projects'),
+  games: () => projectTable(true),
+  projects: () => projectTable(false),
   jams: jamList,
   publications: publicationList,
 };
@@ -147,7 +129,7 @@ const body = template.replace(/\r\n/g, '\n').replace(/\{\{(\w+)\}\}/g, (match, k
 });
 
 const header =
-  '<!-- Generated by scripts/build_readme.mjs from README.template.md, readme.config.json and the portfolio data. Edit those, not this file. -->\n\n';
+  '<!-- Generated by scripts/build_readme.mjs from README.template.md and the portfolio data. Edit those, not this file. -->\n\n';
 const output = header + body;
 
 // In GitHub Actions, print warnings as annotations so they show on the run summary.

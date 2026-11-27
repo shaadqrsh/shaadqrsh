@@ -7,6 +7,7 @@
 //   src/lib/resume_data.json  name, title, about, stats, links, current roles,
 //                             projects, blurbs, jams, publications, skills
 //   src/lib/projectId.ts      per-project links and the game flag
+//   src/lib/stats.ts          the banner's stats, counted the way the site does
 //   public/project_<key>/icon.png, the logos in `image` fields, the fonts,
 //   logo and backdrop of the OG cards, and the colors in globals.css
 //
@@ -82,6 +83,8 @@ try {
 }
 const jiti = createJiti(projectIdPath);
 const { data: projectDetails } = await jiti.import(projectIdPath);
+// The same stats the site shows: Years, Projects and Jams counted from the data.
+const { stats } = await jiti.import(path.join(portfolioDir, 'src/lib/stats.ts'));
 
 const resume = JSON.parse(fs.readFileSync(resumePath, 'utf8'));
 const images = await createImages(portfolioDir);
@@ -168,16 +171,11 @@ async function button(text, icon, kind, size) {
 // ---- top -------------------------------------------------------------------
 
 async function top() {
-  const stats = (resume.testimonials || []).map((t) => ({
-    label: t.label,
-    // The site counts jams from the data rather than the typed number.
-    value: t.label === 'Jams' ? String(resume.jams.length) : t.count,
-  }));
   outputs.set('assets/banner.png', await images.banner({
     name: resume.name,
     title: resume.title,
     domain: new URL(site).hostname.replace(/^www\./, ''),
-    stats,
+    stats: stats.slice(0, 4).map((t) => ({ label: t.label, value: t.count })),
   }));
 
   const links = [
@@ -278,8 +276,8 @@ async function gameGrid(list) {
     cells.push([
       '<td width="50%" valign="top">',
       `<p align="center">${x.page ? link(x.page, tile) : tile}</p>`,
-      `<b>${x.title}</b> (${x.year})<br>`,
-      x.blurb,
+      // Title and blurb get their own paragraph, so the buttons sit a gap below.
+      `<p><b>${x.title}</b> (${x.year})<br>\n${x.blurb}</p>`,
       `<p>\n${x.buttons}\n</p>`,
       '</td>',
     ].join('\n'));
@@ -299,7 +297,7 @@ async function projectList(list) {
   for (const p of list) {
     const x = await project(p);
     const tile = img(x.tileFile, LIST_ICON, LIST_ICON, x.titleAttr, ' align="left"');
-    rows.push(`<p>${x.page ? link(x.page, tile) : tile}<b>${x.title}</b> (${x.year})<br>\n${x.blurb}<br>\n${x.buttons}\n</p>\n<br clear="left">`);
+    rows.push(`<p>${x.page ? link(x.page, tile) : tile}<b>${x.title}</b> (${x.year})<br>\n${x.blurb}</p>\n<p>\n${x.buttons}\n</p>\n<br clear="left">`);
   }
   return rows.join('\n\n');
 }

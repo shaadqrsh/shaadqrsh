@@ -28,8 +28,8 @@ Northeastern University, running lighting, sound, and projection for live campus
 <tr>
 <td width="50%" valign="top">
 <p align="center"><a href="https://www.shaadqrsh.com/projects/countingsheep"><img src="assets/projects/countingsheep.png" width="104" height="104" alt="Counting Sheep"></a></p>
-<b>Counting Sheep</b> (2026)<br>
-Solo 3D platformer for GMTK Game Jam 2026 where clouds fall apart under you. Rated 4.5/5 in most categories.
+<p><b>Counting Sheep</b> (2026)<br>
+Solo 3D platformer for GMTK Game Jam 2026 where clouds fall apart under you. Rated 4.5/5 in most categories.</p>
 <p>
 <a href="https://bro-skito.itch.io/counting-sheep"><img src="assets/buttons/sm-play-fill.png" width="71" height="26" alt="Play"></a>
 &nbsp;<a href="https://www.shaadqrsh.com/projects/countingsheep"><img src="assets/buttons/sm-more-tint.png" width="75" height="26" alt="More"></a>
@@ -37,8 +37,8 @@ Solo 3D platformer for GMTK Game Jam 2026 where clouds fall apart under you. Rat
 </td>
 <td width="50%" valign="top">
 <p align="center"><a href="https://www.shaadqrsh.com/projects/harvestrush"><img src="assets/projects/harvestrush.png" width="104" height="104" alt="Harvest Rush"></a></p>
-<b>Harvest Rush</b> (2026)<br>
-One or two player farming game like Overcooked. Fill the truck's order before pests and fires stop you.
+<p><b>Harvest Rush</b> (2026)<br>
+One or two player farming game like Overcooked. Fill the truck's order before pests and fires stop you.</p>
 <p>
 <a href="https://github.com/shaadqrsh/harvest-rush"><img src="assets/buttons/sm-code-fill.png" width="75" height="26" alt="Code"></a>
 &nbsp;<a href="https://www.shaadqrsh.com/projects/harvestrush"><img src="assets/buttons/sm-more-tint.png" width="75" height="26" alt="More"></a>
@@ -48,8 +48,8 @@ One or two player farming game like Overcooked. Fill the truck's order before pe
 <tr>
 <td width="50%" valign="top">
 <p align="center"><a href="https://www.shaadqrsh.com/projects/tictacgone"><img src="assets/projects/tictacgone.png" width="104" height="104" alt="Tic-Tac-Gone"></a></p>
-<b>Tic-Tac-Gone</b> (2026)<br>
-3D tic-tac-toe in the browser where you only keep three pieces, so a game can never end in a draw.
+<p><b>Tic-Tac-Gone</b> (2026)<br>
+3D tic-tac-toe in the browser where you only keep three pieces, so a game can never end in a draw.</p>
 <p>
 <a href="https://bro-skito.itch.io/tic-tac-gone"><img src="assets/buttons/sm-play-fill.png" width="71" height="26" alt="Play"></a>
 &nbsp;<a href="https://www.shaadqrsh.com/projects/tictacgone"><img src="assets/buttons/sm-more-tint.png" width="75" height="26" alt="More"></a>
@@ -57,8 +57,8 @@ One or two player farming game like Overcooked. Fill the truck's order before pe
 </td>
 <td width="50%" valign="top">
 <p align="center"><a href="https://www.shaadqrsh.com/projects/bushido"><img src="assets/projects/bushido.png" width="104" height="104" alt="Pokémon Bushido"></a></p>
-<b>Pokémon Bushido</b> (2021)<br>
-Samurai fangame made by a team of 4 in 30 days. Won 1st of 31. I did the core engine work.
+<p><b>Pokémon Bushido</b> (2021)<br>
+Samurai fangame made by a team of 4 in 30 days. Won 1st of 31. I did the core engine work.</p>
 <p>
 <a href="https://eeveeexpo.com/bushido/"><img src="assets/buttons/sm-play-fill.png" width="71" height="26" alt="Play"></a>
 &nbsp;<a href="https://github.com/TheLuxDiablo/Pokemon-Bushido"><img src="assets/buttons/sm-code-tint.png" width="75" height="26" alt="Code"></a>
@@ -69,8 +69,8 @@ Samurai fangame made by a team of 4 in 30 days. Won 1st of 31. I did the core en
 <tr>
 <td width="50%" valign="top">
 <p align="center"><a href="https://www.shaadqrsh.com/projects/splice"><img src="assets/projects/splice.png" width="104" height="104" alt="Pokémon Splice"></a></p>
-<b>Pokémon Splice</b> (2020)<br>
-Fangame with a form-changing starter and a branching story. Won 1st of 46, made by 4 people in 30 days.
+<p><b>Pokémon Splice</b> (2020)<br>
+Fangame with a form-changing starter and a branching story. Won 1st of 46, made by 4 people in 30 days.</p>
 <p>
 <a href="https://eeveeexpo.com/splice/"><img src="assets/buttons/sm-play-fill.png" width="71" height="26" alt="Play"></a>
 &nbsp;<a href="https://www.shaadqrsh.com/projects/splice"><img src="assets/buttons/sm-more-tint.png" width="75" height="26" alt="More"></a>
@@ -83,54 +83,62 @@ Fangame with a form-changing starter and a branching story. Won 1st of 46, made 
 ## Other projects
 
 <p><img src="assets/projects/sentineldesk.png" width="96" height="96" alt="SentinelDesk" align="left"><b>SentinelDesk</b> (2026)<br>
-IT ticket triage in English and German, built in a 6-hour hackathon. I led the team of five to 5th of 20.<br>
+IT ticket triage in English and German, built in a 6-hour hackathon. I led the team of five to 5th of 20.</p>
+<p>
 <a href="https://github.com/miluskapajuelo/GDG-cloudburst"><img src="assets/buttons/sm-code-fill.png" width="75" height="26" alt="Code"></a>
 </p>
 <br clear="left">
 
 <p><a href="https://www.shaadqrsh.com/projects/nanorewind"><img src="assets/projects/nanorewind.png" width="96" height="96" alt="NanoRewind 4K" align="left"></a><b>NanoRewind 4K</b> (2025)<br>
-Restores scratched and faded family photos with Google Gemini in styles like Cyanotype or Kodachrome 64.<br>
+Restores scratched and faded family photos with Google Gemini in styles like Cyanotype or Kodachrome 64.</p>
+<p>
 <a href="https://nanorewind-4k.vercel.app"><img src="assets/buttons/sm-live-fill.png" width="69" height="26" alt="Live"></a>
 &nbsp;<a href="https://github.com/shaadqrsh/nanorewind-4k"><img src="assets/buttons/sm-code-tint.png" width="75" height="26" alt="Code"></a>
 </p>
 <br clear="left">
 
 <p><a href="https://www.shaadqrsh.com/projects/sqllift"><img src="assets/projects/sqllift.png" width="96" height="96" alt="SQLift" align="left"></a><b>SQLift</b> (2026)<br>
-Workout tracker with live set logging and leaderboards. I wrote Flask API modules and the CI/CD pipeline.<br>
+Workout tracker with live set logging and leaderboards. I wrote Flask API modules and the CI/CD pipeline.</p>
+<p>
 <a href="https://cs-5200-project.vercel.app"><img src="assets/buttons/sm-live-fill.png" width="69" height="26" alt="Live"></a>
 &nbsp;<a href="https://github.com/btoneil2021/cs-5200-project"><img src="assets/buttons/sm-code-tint.png" width="75" height="26" alt="Code"></a>
 </p>
 <br clear="left">
 
 <p><a href="https://www.shaadqrsh.com/projects/careerpath"><img src="assets/projects/careerpath.png" width="96" height="96" alt="CareerPath AI" align="left"></a><b>CareerPath AI</b> (2025)<br>
-AI career counselor that builds personalized roadmaps and "day in the life" previews. Built in 3 days.<br>
+AI career counselor that builds personalized roadmaps and "day in the life" previews. Built in 3 days.</p>
+<p>
 <a href="https://pathfinder-ai-nine.vercel.app/"><img src="assets/buttons/sm-live-fill.png" width="69" height="26" alt="Live"></a>
 &nbsp;<a href="https://github.com/shaadqrsh/pathfinder-ai"><img src="assets/buttons/sm-code-tint.png" width="75" height="26" alt="Code"></a>
 </p>
 <br clear="left">
 
 <p><a href="https://www.shaadqrsh.com/projects/homi"><img src="assets/projects/homi.png" width="96" height="96" alt="HOMI" align="left"></a><b>HOMI</b> (2025)<br>
-Learning assistant for IT students that hands out study material, answers questions and writes practice tests.<br>
+Learning assistant for IT students that hands out study material, answers questions and writes practice tests.</p>
+<p>
 <a href="https://homi-bot.vercel.app"><img src="assets/buttons/sm-live-fill.png" width="69" height="26" alt="Live"></a>
 &nbsp;<a href="https://github.com/shaadqrsh/HOMI-distro"><img src="assets/buttons/sm-code-tint.png" width="75" height="26" alt="Code"></a>
 </p>
 <br clear="left">
 
 <p><a href="https://www.shaadqrsh.com/projects/findly"><img src="assets/projects/findly.png" width="96" height="96" alt="Findly" align="left"></a><b>Findly</b> (2025)<br>
-Android lost-and-found app with a live item feed and in-app chat.<br>
+Android lost-and-found app with a live item feed and in-app chat.</p>
+<p>
 <a href="https://github.com/shaadqrsh/findly-android-studio/"><img src="assets/buttons/sm-code-fill.png" width="75" height="26" alt="Code"></a>
 </p>
 <br clear="left">
 
 <p><a href="https://www.shaadqrsh.com/projects/emaadportfolio"><img src="assets/projects/emaadportfolio.png" width="96" height="96" alt="Artist Portfolio" align="left"></a><b>Artist Portfolio</b> (2026)<br>
-Portfolio site for Emaad, an artist in my family, who adds and edits pieces through Decap CMS.<br>
+Portfolio site for Emaad, an artist in my family, who adds and edits pieces through Decap CMS.</p>
+<p>
 <a href="https://emmeqqu-08.github.io/emaad-portfolio/"><img src="assets/buttons/sm-live-fill.png" width="69" height="26" alt="Live"></a>
 &nbsp;<a href="https://github.com/emmeqqu-08/emaad-portfolio"><img src="assets/buttons/sm-code-tint.png" width="75" height="26" alt="Code"></a>
 </p>
 <br clear="left">
 
 <p><img src="assets/projects/portfolio.png" width="96" height="96" alt="shaadqrsh.com" align="left"><b>shaadqrsh.com</b> (2026)<br>
-My portfolio site. One data file builds every project page, the resume PDF and this GitHub profile.<br>
+My portfolio site. One data file builds every project page, the resume PDF and this GitHub profile.</p>
+<p>
 <a href="https://www.shaadqrsh.com"><img src="assets/buttons/sm-live-fill.png" width="69" height="26" alt="Live"></a>
 &nbsp;<a href="https://github.com/shaadqrsh/shaad-portfolio"><img src="assets/buttons/sm-code-tint.png" width="75" height="26" alt="Code"></a>
 </p>

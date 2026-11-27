@@ -24,8 +24,9 @@
 //   - Top: the banner (linking to the site), the About text, then a button
 //     for the portfolio, the resume, and every link in `links` except GitHub,
 //     since the README is already on GitHub.
-//   - Right now: every education and experience record with inProgress, with
-//     its logo. An experience's optional `blurb` follows its place.
+//   - Right now: a grid of two, every experience record with inProgress and
+//     then every such education record, each with its logo centered above
+//     it. An experience's optional `blurb` follows its place.
 //   - Games (a grid of two) and Other projects (a list): split by the `game`
 //     flag in projectId.ts, in resume_data.json order, including projects
 //     marked hidden (those are kept off the site only, so they get no page
@@ -154,6 +155,10 @@ const MANAGED_DIRS = ['assets/buttons', 'assets/projects', 'assets/now'];
 const img = (src, w, h, alt, extra = '') =>
   `<img src="${src}"${w ? ` width="${w}"` : ''}${h ? ` height="${h}"` : ''} alt="${attr(alt)}"${extra}>`;
 const link = (href, inner) => `<a href="${attr(href)}">${inner}</a>`;
+// GitHub links every image that isn't already in a link to its raw file. An
+// image inside <picture> is left alone, so images with nowhere useful to go
+// aren't clickable.
+const still = (imgTag) => `<picture>${imgTag}</picture>`;
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 const buttons = new Map();
@@ -209,21 +214,34 @@ async function logo(image, alt, fallback) {
   if (source && !fs.existsSync(source)) warnings.push(`logo ${image} not found in public/, using the ${fallback} icon`);
   const file = `assets/now/${source && fs.existsSync(source) ? path.basename(image, path.extname(image)) : fallback}.png`;
   if (!outputs.has(file)) outputs.set(file, await images.logoTile(source, fallback));
-  return img(file, images.LOGO_SIZE, images.LOGO_SIZE, alt, ' align="left"');
+  return still(img(file, images.LOGO_SIZE, images.LOGO_SIZE, alt));
 }
 
-async function nowList() {
+async function nowGrid() {
+  // Work first, then study.
   const rows = [];
+  for (const x of resume.experience.filter((x) => x.inProgress)) {
+    const place = (x.location || '').split(', ')[0];
+    rows.push([await logo(x.image, place || x.title, 'work'), x.title, [place, x.blurb].filter(Boolean).join(', ')]);
+  }
   for (const e of resume.education.filter((e) => e.inProgress)) {
     const place = e.subtitle?.[0] || '';
     const school = place.split(', ').pop();
     rows.push([await logo(e.image, school, 'school'), e.title, `${place ? `${place}, ` : ''}${year(e.startDate)} to ${year(e.endDate)}`]);
   }
-  for (const x of resume.experience.filter((x) => x.inProgress)) {
-    const place = (x.location || '').split(', ')[0];
-    rows.push([await logo(x.image, place || x.title, 'work'), x.title, [place, x.blurb].filter(Boolean).join(', ')]);
+  // A grid of two like Games, each logo centered above its role.
+  return gridOfTwo(rows.map(([logoImg, title, line]) => `<p align="center">${logoImg}</p>\n<p><b>${html(title)}</b><br>\n${html(line)}</p>`));
+}
+
+// A table two cells wide. An odd count leaves the last cell empty.
+function gridOfTwo(cells) {
+  const rows = [];
+  for (let i = 0; i < cells.length; i += 2) {
+    const row = cells.slice(i, i + 2).map((c) => `<td width="50%" valign="top">\n${c}\n</td>`);
+    if (row.length < 2) row.push('<td width="50%"></td>');
+    rows.push(`<tr>\n${row.join('\n')}\n</tr>`);
   }
-  return rows.map(([logoImg, title, line]) => `<p>${logoImg}<b>${html(title)}</b><br>\n${html(line)}</p>\n<br clear="left">`).join('\n\n');
+  return `<table>\n${rows.join('\n')}\n</table>`;
 }
 
 // ---- projects --------------------------------------------------------------
@@ -274,21 +292,13 @@ async function gameGrid(list) {
     const x = await project(p);
     const tile = img(x.tileFile, images.TILE, images.TILE, x.titleAttr);
     cells.push([
-      '<td width="50%" valign="top">',
-      `<p align="center">${x.page ? link(x.page, tile) : tile}</p>`,
+      `<p align="center">${x.page ? link(x.page, tile) : still(tile)}</p>`,
       // Title and blurb get their own paragraph, so the buttons sit a gap below.
       `<p><b>${x.title}</b> (${x.year})<br>\n${x.blurb}</p>`,
       `<p>\n${x.buttons}\n</p>`,
-      '</td>',
     ].join('\n'));
   }
-  const rows = [];
-  for (let i = 0; i < cells.length; i += 2) {
-    const row = cells.slice(i, i + 2);
-    if (row.length < 2) row.push('<td width="50%"></td>');
-    rows.push(`<tr>\n${row.join('\n')}\n</tr>`);
-  }
-  return `<table>\n${rows.join('\n')}\n</table>`;
+  return gridOfTwo(cells);
 }
 
 const LIST_ICON = 96;
@@ -297,7 +307,7 @@ async function projectList(list) {
   for (const p of list) {
     const x = await project(p);
     const tile = img(x.tileFile, LIST_ICON, LIST_ICON, x.titleAttr, ' align="left"');
-    rows.push(`<p>${x.page ? link(x.page, tile) : tile}<b>${x.title}</b> (${x.year})<br>\n${x.blurb}</p>\n<p>\n${x.buttons}\n</p>\n<br clear="left">`);
+    rows.push(`<p>${x.page ? link(x.page, tile) : still(tile)}<b>${x.title}</b> (${x.year})<br>\n${x.blurb}</p>\n<p>\n${x.buttons}\n</p>\n<br clear="left">`);
   }
   return rows.join('\n\n');
 }
@@ -338,7 +348,7 @@ async function activity() {
     warnings.push(login ? 'no GitHub token (GITHUB_TOKEN, GH_TOKEN or gh auth), so the activity card was not refreshed' : 'no GitHub link in `links`, so no activity card');
   }
   if (!outputs.has(file) && !fs.existsSync(path.join(repoDir, file))) return null;
-  return img(file, '100%', null, 'GitHub contribution grid for the last 12 months, with the current and longest streaks');
+  return still(img(file, '100%', null, 'GitHub contribution grid for the last 12 months, with the current and longest streaks'));
 }
 
 // ---- tools -----------------------------------------------------------------
@@ -358,7 +368,7 @@ function toolList() {
     const parts = [`**${category}**`];
     // One image per skill, so each gets its own alt text and hover title.
     if (withIcon.length) {
-      const imgs = withIcon.map((s) => `  <img src="${s.icon}" width="48" height="48" alt="${attr(s.name)}" title="${attr(s.name)}">`);
+      const imgs = withIcon.map((s) => `  ${still(img(s.icon, 48, 48, s.name, ` title="${attr(s.name)}"`))}`);
       parts.push(`<p>\n${imgs.join('\n')}\n</p>`);
     }
     if (plain.length) parts.push(plain.join(', '));
@@ -373,7 +383,7 @@ const isGame = (p) => Boolean(projectDetails[p.url]?.game);
 const activityImg = await activity();
 const sections = [
   await top(),
-  `## Right now\n\n${await nowList()}`,
+  `## Right now\n\n${await nowGrid()}`,
   `## Games\n\n${await gameGrid(resume.projects.filter(isGame))}`,
   `## Other projects\n\n${await projectList(resume.projects.filter((p) => !isGame(p)))}`,
   `## Jams and challenges\n\n${jamList()}`,

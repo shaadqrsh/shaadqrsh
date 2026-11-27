@@ -14,13 +14,20 @@ I'm a Computer Science student with a background in AI, but I've always been a g
 
 ## Right now
 
-<p><img src="assets/now/img_neu.png" width="48" height="48" alt="Northeastern University" align="left"><b>Masters of Science - Computer Science</b><br>
-Khoury College of Computer Sciences, Northeastern University, 2026 to 2028</p>
-<br clear="left">
-
-<p><img src="assets/now/img_neu.png" width="48" height="48" alt="Northeastern University" align="left"><b>Media Services Technician</b><br>
+<table>
+<tr>
+<td width="50%" valign="top">
+<p align="center"><picture><img src="assets/now/img_neu.png" width="64" height="64" alt="Northeastern University"></picture></p>
+<p><b>Media Services Technician</b><br>
 Northeastern University, running lighting, sound, and projection for live campus events</p>
-<br clear="left">
+</td>
+<td width="50%" valign="top">
+<p align="center"><picture><img src="assets/now/img_neu.png" width="64" height="64" alt="Northeastern University"></picture></p>
+<p><b>Masters of Science - Computer Science</b><br>
+Khoury College of Computer Sciences, Northeastern University, 2026 to 2028</p>
+</td>
+</tr>
+</table>
 
 ## Games
 
@@ -82,7 +89,7 @@ Fangame with a form-changing starter and a branching story. Won 1st of 46, made 
 
 ## Other projects
 
-<p><img src="assets/projects/sentineldesk.png" width="96" height="96" alt="SentinelDesk" align="left"><b>SentinelDesk</b> (2026)<br>
+<p><a href="https://www.shaadqrsh.com/projects/sentineldesk"><img src="assets/projects/sentineldesk.png" width="96" height="96" alt="SentinelDesk" align="left"></a><b>SentinelDesk</b> (2026)<br>
 IT ticket triage in English and German, built in a 6-hour hackathon. I led the team of five to 5th of 20.</p>
 <p>
 <a href="https://github.com/miluskapajuelo/GDG-cloudburst"><img src="assets/buttons/sm-code-fill.png" width="75" height="26" alt="Code"></a>
@@ -136,7 +143,7 @@ Portfolio site for Emaad, an artist in my family, who adds and edits pieces thro
 </p>
 <br clear="left">
 
-<p><img src="assets/projects/portfolio.png" width="96" height="96" alt="shaadqrsh.com" align="left"><b>shaadqrsh.com</b> (2026)<br>
+<p><picture><img src="assets/projects/portfolio.png" width="96" height="96" alt="shaadqrsh.com" align="left"></picture><b>shaadqrsh.com</b> (2026)<br>
 My portfolio site. One data file builds every project page, the resume PDF and this GitHub profile.</p>
 <p>
 <a href="https://www.shaadqrsh.com"><img src="assets/buttons/sm-live-fill.png" width="69" height="26" alt="Live"></a>
@@ -160,35 +167,35 @@ My portfolio site. One data file builds every project page, the resume PDF and t
 
 ## GitHub activity
 
-<img src="assets/activity.png" width="100%" alt="GitHub contribution grid for the last 12 months, with the current and longest streaks">
+<picture><img src="assets/activity.png" width="100%" alt="GitHub contribution grid for the last 12 months, with the current and longest streaks"></picture>
 
 ## Tools
 
 **Engines & Tools**
 
 <p>
-  <img src="https://skillicons.dev/icons?i=unity" width="48" height="48" alt="Unity" title="Unity">
-  <img src="https://skillicons.dev/icons?i=unreal" width="48" height="48" alt="Unreal Engine" title="Unreal Engine">
-  <img src="https://skillicons.dev/icons?i=blender" width="48" height="48" alt="Blender" title="Blender">
-  <img src="https://skillicons.dev/icons?i=godot" width="48" height="48" alt="Godot" title="Godot">
-  <img src="assets/skills/claude.svg" width="48" height="48" alt="Claude Code" title="Claude Code">
-  <img src="https://skillicons.dev/icons?i=ps" width="48" height="48" alt="Photoshop" title="Photoshop">
-  <img src="https://skillicons.dev/icons?i=pr" width="48" height="48" alt="Premiere Pro" title="Premiere Pro">
-  <img src="https://skillicons.dev/icons?i=git" width="48" height="48" alt="Git" title="Git">
-  <img src="assets/skills/microsoftoffice.svg" width="48" height="48" alt="Microsoft Office" title="Microsoft Office">
+  <picture><img src="https://skillicons.dev/icons?i=unity" width="48" height="48" alt="Unity" title="Unity"></picture>
+  <picture><img src="https://skillicons.dev/icons?i=unreal" width="48" height="48" alt="Unreal Engine" title="Unreal Engine"></picture>
+  <picture><img src="https://skillicons.dev/icons?i=blender" width="48" height="48" alt="Blender" title="Blender"></picture>
+  <picture><img src="https://skillicons.dev/icons?i=godot" width="48" height="48" alt="Godot" title="Godot"></picture>
+  <picture><img src="assets/skills/claude.svg" width="48" height="48" alt="Claude Code" title="Claude Code"></picture>
+  <picture><img src="https://skillicons.dev/icons?i=ps" width="48" height="48" alt="Photoshop" title="Photoshop"></picture>
+  <picture><img src="https://skillicons.dev/icons?i=pr" width="48" height="48" alt="Premiere Pro" title="Premiere Pro"></picture>
+  <picture><img src="https://skillicons.dev/icons?i=git" width="48" height="48" alt="Git" title="Git"></picture>
+  <picture><img src="assets/skills/microsoftoffice.svg" width="48" height="48" alt="Microsoft Office" title="Microsoft Office"></picture>
 </p>
 
 **Languages & Frameworks**
 
 <p>
-  <img src="https://skillicons.dev/icons?i=react" width="48" height="48" alt="React" title="React">
-  <img src="https://skillicons.dev/icons?i=lua" width="48" height="48" alt="Lua" title="Lua">
-  <img src="https://skillicons.dev/icons?i=cs" width="48" height="48" alt="C#" title="C#">
-  <img src="https://skillicons.dev/icons?i=cpp" width="48" height="48" alt="C++" title="C++">
-  <img src="https://skillicons.dev/icons?i=ruby" width="48" height="48" alt="Ruby" title="Ruby">
-  <img src="https://skillicons.dev/icons?i=py" width="48" height="48" alt="Python" title="Python">
-  <img src="https://skillicons.dev/icons?i=java" width="48" height="48" alt="Java" title="Java">
-  <img src="https://skillicons.dev/icons?i=androidstudio" width="48" height="48" alt="Android" title="Android">
+  <picture><img src="https://skillicons.dev/icons?i=react" width="48" height="48" alt="React" title="React"></picture>
+  <picture><img src="https://skillicons.dev/icons?i=lua" width="48" height="48" alt="Lua" title="Lua"></picture>
+  <picture><img src="https://skillicons.dev/icons?i=cs" width="48" height="48" alt="C#" title="C#"></picture>
+  <picture><img src="https://skillicons.dev/icons?i=cpp" width="48" height="48" alt="C++" title="C++"></picture>
+  <picture><img src="https://skillicons.dev/icons?i=ruby" width="48" height="48" alt="Ruby" title="Ruby"></picture>
+  <picture><img src="https://skillicons.dev/icons?i=py" width="48" height="48" alt="Python" title="Python"></picture>
+  <picture><img src="https://skillicons.dev/icons?i=java" width="48" height="48" alt="Java" title="Java"></picture>
+  <picture><img src="https://skillicons.dev/icons?i=androidstudio" width="48" height="48" alt="Android" title="Android"></picture>
 </p>
 
 **Design & Practices**

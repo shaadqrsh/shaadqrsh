@@ -138,16 +138,16 @@ export async function createImages(portfolioDir) {
     return png(await sharp(flat).composite([{ input: roundMask(n, r), blend: 'dest-in' }]).toBuffer());
   }
 
-  // An organisation logo the way the site's Logo component shows it: contained
-  // on a white rounded tile, or a Lucide icon in red on a panel when there's
+  // An organisation logo the way the site's Logo component shows it at its
+  // large size (64px, 14px corners): contained on a white rounded tile, or a Lucide icon in red on a panel when there's
   // no image.
-  const LOGO_SIZE = 48;
+  const LOGO_SIZE = 64;
   const FALLBACK = {
     school: '<path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>',
     work: '<path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/>',
   };
   async function logoTile(imagePath, fallback) {
-    const n = u(LOGO_SIZE), r = u(10);
+    const n = u(LOGO_SIZE), r = u(14);
     let flat;
     if (imagePath && fs.existsSync(imagePath)) {
       const front = await sharp(imagePath).resize(n, n, { fit: 'contain', background: { r: 255, g: 255, b: 255, alpha: 1 } }).flatten({ background: '#ffffff' }).toBuffer();
